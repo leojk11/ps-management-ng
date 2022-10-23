@@ -1,1 +1,45 @@
 /* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+    background-color: rgb(222 230 240);
+}
+
+.p-button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none;
+    outline: none;
+}
+
+.form-group {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+
+    margin-bottom: 20px;
+
+    .label {
+        width: 30%;
+    }
+
+    .input {
+        width: 70%;
+
+        input {
+            width: 100% !important;
+        }
+    }
+}
+
+.card {
+    width: 100%;
+    padding: 15px;
+
+    background-color: #ffffff;
+    color: #000000;
+
+    border-radius: 15px;
+}

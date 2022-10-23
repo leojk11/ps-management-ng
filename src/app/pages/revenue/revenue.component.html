@@ -1,0 +1,50 @@
+<div class="w-full h-full p-2">
+    <div class="card shadow-md">
+        <div class="revenue-item">
+            <div class="label">
+                <label>This month: </label>
+            </div>
+            <div class="info">
+                <span>15000 MKD</span>
+            </div>
+        </div>
+
+        <div class="revenue-item mt-2">
+            <div class="label">
+                <label>This year: </label>
+            </div>
+            <div class="info">
+                <span>150000 MKD</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-7 shadow-md">
+        <div class="calendars">
+            <p-calendar
+                placeholder="from..."
+                appendTo="body"
+            ></p-calendar>
+            <p-calendar
+                placeholder="to..."
+                appendTo="body"
+            ></p-calendar>
+        </div>
+
+        <div class="buttons mt-3">
+            <button
+                pButton
+                label="Search"
+            ></button>
+        </div>
+
+        <div class="revenues mt-3">
+            <app-single-revenue></app-single-revenue>
+            <app-single-revenue></app-single-revenue>
+            <app-single-revenue></app-single-revenue>
+            <app-single-revenue></app-single-revenue>
+            <app-single-revenue></app-single-revenue>
+            <app-single-revenue></app-single-revenue>
+        </div>
+    </div>
+</div>

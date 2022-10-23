@@ -1,0 +1,27 @@
+<div class="home-console shadow-md p-2 mb-2">
+    <div class="label">
+        <div class="top">
+            <h1>PS1</h1>
+        </div>
+        <div class="bottom">
+            <p>status</p>
+        </div>
+    </div>
+
+    <div class="time">
+        <h1>25 hrs</h1>
+    </div>
+
+    <div class="buttons">
+        <button
+            pButton
+            icon="pi pi-play"
+        ></button>
+
+        <button
+            pButton
+            icon="pi pi-stop"
+            [class.p-disabled]="true"
+        ></button>
+    </div>
+</div>

@@ -1,1 +1,17 @@
-<p>footer works!</p>
+<div 
+    class="footer shadow-md p-2" 
+    *ngIf="layoutService.layoutState$ | async as state">
+    <div class="menu">
+        <div 
+            class="item shadow-md" 
+            *ngFor="let item of state.footerMenus"
+            [class.center]="item.circle"
+            [routerLink]="item.routeTo"
+            routerLinkActive="active">
+            <div class="icon">
+                <i [class]="item.icon"></i>
+            </div>
+            <div class="label">{{ item.label }}</div>
+        </div>
+    </div>
+</div>

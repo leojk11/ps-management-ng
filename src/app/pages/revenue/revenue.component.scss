@@ -1,0 +1,36 @@
+.revenue-item {
+    width: 100%;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    
+    .label {
+        width: 40%;
+
+        font-weight: bold;
+    }
+
+    .info {
+        width: 60%;
+    }
+}
+
+.calendars {
+    width: 100%;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 10px;
+}
+
+.buttons {
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
