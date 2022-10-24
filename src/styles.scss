@@ -3,15 +3,12 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-    background-color: rgb(222 230 240);
+.cp {
+    cursor: pointer;
 }
 
-.p-button {
-    background-color: #000000 !important;
-    color: #ffffff !important;
-    border: none;
-    outline: none;
+body {
+    background-color: rgb(222 230 240);
 }
 
 .form-group {
@@ -24,6 +21,17 @@ body {
     .label {
         width: 30%;
     }
+    .label.mandatory {
+        padding-bottom: 5px;
+        font-size: 16px;
+
+        &:after {
+            content: "*";
+            color: red;
+            margin-left: 4px;
+        }
+    }
+    
 
     .input {
         width: 70%;
@@ -42,4 +50,17 @@ body {
     color: #000000;
 
     border-radius: 15px;
+}
+
+// PRIMENG
+
+.p-button {
+    background-color: #000000 !important;
+    color: #ffffff !important;
+    border: none;
+    outline: none;
+}
+
+.p-dialog {
+    width: 90vw !important;
 }

@@ -1,11 +1,14 @@
 <div class="console mt-2 shadow-md">
     <div class="label">
-        <h1>PS1</h1>
+        <h1>{{ console.name }}</h1>
     </div>
 
     <div class="info">
-        <div class="model">Model: <b>PS5/PS4</b></div>
-        <div class="total">100hrs</div>
+        <div class="model">Model: <b>{{ console.model }}</b></div>
+        <div 
+            *ngIf="console.overall_time_played"
+            class="total"
+        >{{ console.overall_time_played }} hrs</div>
     </div>
 
     <div class="buttons">
@@ -16,10 +19,17 @@
         <button
             pButton
             icon="pi pi-pencil"
+            (click)="goToEdit()"
         ></button>
         <button
             pButton
             icon="pi pi-trash"
+            (click)="delete()"
         ></button>
     </div>
 </div>
+
+<p-confirmDialog 
+    header="Confirmation" 
+    icon="pi pi-exclamation-triangle"
+></p-confirmDialog>
