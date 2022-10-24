@@ -1,27 +1,53 @@
-<div class="home-console shadow-md p-2 mb-2">
+<div 
+    class="home-console shadow-md p-2 mb-2"
+    [class.p-disabled]="inProgress">
     <div class="label">
         <div class="top">
-            <h1>PS1</h1>
+            <h1>{{ console.name }}</h1>
         </div>
         <div class="bottom">
-            <p>status</p>
+            <p>{{ console.status }}</p>
         </div>
     </div>
 
     <div class="time">
-        <h1>25 hrs</h1>
+        <h1>{{ console.today_time_played }} hrs</h1>
     </div>
 
     <div class="buttons">
         <button
             pButton
             icon="pi pi-play"
+            [class.p-disabled]="console.playing"
+            (click)="start()"
         ></button>
 
         <button
             pButton
             icon="pi pi-stop"
-            [class.p-disabled]="true"
+            [class.p-disabled]="!console.playing"
+            (click)="stop()"
         ></button>
     </div>
 </div>
+
+<p-dialog 
+    header="Info" 
+    [(visible)]="displayModal" 
+    [modal]="true" 
+    [style]="{width: '50vw'}"
+    [draggable]="false" 
+    [resizable]="false">
+    <p class="m-0" *ngIf="hoursPlayed > 0"><b>Hours played:</b> {{ hoursPlayed }}</p>
+    <p class="m-0" *ngIf="hoursPlayed < 1 && minutesPlayed > 0"><b>Minutes played:</b> {{ minutesPlayed }}</p>
+    <p class="m-0 mt-2"><b>Price to pay:</b> {{ priceToPay }}</p>
+
+    <ng-template pTemplate="footer">
+        <p-button 
+            icon="pi pi-check" 
+            (click)="displayModal=false" 
+            label="Ok" 
+            styleClass="p-button-text"
+        ></p-button>
+    </ng-template>
+</p-dialog>

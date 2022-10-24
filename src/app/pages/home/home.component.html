@@ -1,11 +1,16 @@
-<div class="w-full h-full p-2">
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    <app-home-console></app-home-console>
-    
+<div 
+    class="w-full h-full p-2" 
+    *ngIf="consolesStore.state$ | async as state">
+    <ng-container *ngIf="state.loaded">
+        <app-home-console
+            *ngFor="let console of state.consoles"
+            [console]="console"
+        ></app-home-console>
+    </ng-container>
+
+    <div 
+        *ngIf="!state.loaded" 
+        class="w-full h-full flex justify-center align-center">
+        <app-spinner></app-spinner>
+    </div>
 </div>

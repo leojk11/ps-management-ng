@@ -7,6 +7,7 @@ export interface Console {
     today_time_played: number;
 
     games: string;
-
+    status: string;
     playing: boolean;
+    start_time: string;
 }

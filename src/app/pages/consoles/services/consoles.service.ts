@@ -35,6 +35,16 @@ export class ConsolesService {
     return this.http.patch<MessageResponse>(path, body);
   }
 
+  start(id: string, time: Date): Observable<MessageResponse> {
+    const path = `${ this.apiUrl }/consoles/${ id }/start`;
+    return this.http.patch<MessageResponse>(path, { time });
+  }
+
+  stop(id: string): Observable<MessageResponse> {
+    const path = `${ this.apiUrl }/consoles/${ id }/stop`;
+    return this.http.patch<MessageResponse>(path, {});
+  }
+
   deleteConsole(id: string): Observable<MessageResponse> {
     const path = `${ this.apiUrl }/consoles/${ id }`;
     return this.http.delete<MessageResponse>(path);
