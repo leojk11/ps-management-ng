@@ -21,7 +21,7 @@ export const initialState: SettingsState = {
 export class SettingsStore {
 
   settingsState = new BehaviorSubject<SettingsState>(initialState);
-  settingsState$ = this.settingsState.asObservable();
+  public settingsState$ = this.settingsState.asObservable();
 
   constructor(
     private settingsService: SettingsService

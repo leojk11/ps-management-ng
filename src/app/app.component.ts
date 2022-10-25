@@ -4,6 +4,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { MainLayoutComponent } from './layout/main-layout.component';
 import { AuthService } from './core/services/auth.service';
+import { SettingsStore } from './pages/settings/services/settings.store';
+import { SettingsService } from './pages/settings/services/settings.service';
 
 // primeng
 import { ToastModule } from 'primeng/toast';
@@ -36,7 +38,9 @@ export class AppComponent implements OnInit {
   username: string = '';
   
   constructor(
-    private authState: AuthService
+    private authState: AuthService,
+    private settingsStore: SettingsStore,
+    private settingsService: SettingsService
   ) { }
 
   ngOnInit(): void {
@@ -47,6 +51,12 @@ export class AppComponent implements OnInit {
     } else {
       this.displayModal = true;
     }
+
+    this.settingsService.getSettings().subscribe({
+      next: res => {
+        this.settingsStore.setSettings(res);
+      }
+    });
   }
 
   login(): void {
