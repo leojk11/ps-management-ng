@@ -6,6 +6,19 @@
             *ngFor="let console of state.consoles"
             [console]="console"
         ></app-home-console>
+
+        <div 
+            *ngIf="state.consoles.length === 0"
+            class="w-full h-full flex flex-wrap justify-center align-center mt-20">
+            <h3 class="w-full text-center">Во моментов немате додаено конзоли.</h3>
+
+            <button
+                pButton
+                label="Додај конзола"
+                class="w-full mt-5"
+                routerLink="/new-console"
+            ></button>
+        </div>
     </ng-container>
 
     <div 

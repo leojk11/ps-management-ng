@@ -1,8 +1,13 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+
 import { ConsoleComponent } from './components/console/console.component';
 import { ConsolesStore } from './services/consoless.store';
 import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
+
+// primeng
+import { ButtonModule } from 'primeng/button';
 
 @Component({
   selector: 'app-consoles',
@@ -10,7 +15,9 @@ import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.comp
   imports: [
     CommonModule,
     ConsoleComponent,
-    SpinnerComponent
+    SpinnerComponent,
+    ButtonModule,
+    RouterModule
   ],
   providers: [
     ConsolesStore
