@@ -1,20 +1,34 @@
-<div class="w-full h-full p-2">
-    <div class="card">
-        <div class="form-group">
-            <div class="label">
-                <label>Price/hr:</label>
-            </div>
-            <div class="input">
-                <input type="text" pInputText placeholder="price/hr...">
-            </div>
-        </div>
-    </div>
+<div class="w-full h-full p-2" *ngIf="settingsStore.settingsState$ | async as state">
+    <ng-container *ngIf="state.loaded">
+        <form [formGroup]="form" (ngSubmit)="handleSubmit()">
+            <div class="card">
+                <div class="form-group">
+                    <div class="label">
+                        <label>Цена/час:</label>
+                    </div>
 
-    <div class="flex justify-center align-center mt-3">
-        <button
-            pButton
-            icon="pi pi-save"
-            label="Save"
-        ></button>
+                    <div class="input">
+                        <p-inputNumber 
+                            formControlName="price_per_hour"
+                            [showButtons]="true"
+                        ></p-inputNumber>
+                    </div>
+                </div>
+            </div>
+        
+            <div class="flex justify-center align-center mt-3">
+                <button
+                    pButton
+                    icon="pi pi-save"
+                    label="Зачувај"
+                ></button>
+            </div>
+        </form>
+    </ng-container>
+
+    <div 
+        *ngIf="!state.loaded"
+        class="w-full h-full flex justify-center align-center">
+        <app-spinner></app-spinner>
     </div>
 </div>

@@ -2,23 +2,23 @@
     <form [formGroup]="form" (ngSubmit)="handleSubmit()">
         <div class="card">
             <div class="form-group">
-                <label class="label mandatory">Name:</label>
+                <label class="label mandatory">Име:</label>
                 <div class="input">
                     <input 
                         type="text" 
                         pInputText
-                        placeholder="name..."
+                        placeholder="име..."
                         formControlName="name"
                     >
                 </div>
             </div>
         
             <div class="form-group">
-                <label class="label mandatory">Model:</label>
+                <label class="label mandatory">Модел:</label>
                 <div class="input">
                     <p-dropdown
                         [options]="consoleModelOptions"
-                        placeholder="model..."
+                        placeholder="модел..."
                         [style]="{ 'width': '100%' }"
                         formControlName="model"
                         appendTo="body"
@@ -27,14 +27,14 @@
             </div>
 
             <div class="form-group">
-                <label class="label">Games:</label>
+                <label class="label">Игри:</label>
                 <div class="input">
                     <p-multiSelect 
                         [options]="gameOptions" 
                         [(ngModel)]="selectedGames"
                         [ngModelOptions]="{ 'standalone': true }"
                         [filter]="false"
-                        placeholder="games..."
+                        placeholder="игри..."
                         [style]="{ 'width': '100%' }"
                         appendTo="body"
                     ></p-multiSelect>
@@ -46,20 +46,20 @@
             <button
                 *ngIf="!editMode"
                 pButton
-                label="Submit"
+                label="Зачувај"
                 [class.p-disabled]="form.invalid"
             ></button>
 
             <button
                 *ngIf="editMode"
                 pButton
-                label="Update"
+                label="Зачувај"
                 [class.p-disabled]="form.invalid"
             ></button>
     
             <button
                 pButton
-                label="Cancel"
+                label="Откажи"
                 (click)="cancel()"
             ></button>
         </div>

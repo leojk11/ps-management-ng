@@ -1,14 +1,27 @@
-<div class="header shadow-md p-2">
+<div class="header shadow-md p-2" *ngIf="authState.authState$ | async as state">
     <div class="logo" routerLink="home">
         <img src="/assets/img/ps_logo.png">
     </div>
 
     <div class="info">
         <p class="title">PS Management</p>
-        <p class="version">0.0.1</p>
+        <p class="version">0.0.2</p>
     </div>
 
-    <div class="user">
-        <p>L</p>
+    <div 
+        class="user" 
+        (click)="op.toggle($event)">
+        <p>{{ state.user.charAt(0) | uppercase }}</p>
     </div>
 </div>
+
+<p-overlayPanel #op>
+    <ng-template pTemplate>
+        <button
+            pButton
+            label="Logout"
+            icon="pi pi-sign-out"
+            (click)="logout()"
+        ></button>
+    </ng-template>
+</p-overlayPanel>

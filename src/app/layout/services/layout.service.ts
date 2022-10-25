@@ -9,12 +9,12 @@ export interface LayoutState {
 export const initialState: LayoutState = {
   footerMenus: [
     {
-      label: 'Home',
+      label: 'Дома',
       icon: 'pi pi-home',
       routeTo: 'home'
     },
     {
-      label: 'Consoles',
+      label: 'Конзоли',
       icon: 'pi pi-prime',
       routeTo: 'consoles'
     },
@@ -24,12 +24,12 @@ export const initialState: LayoutState = {
       circle: true
     },
     {
-      label: 'Revenue',
+      label: 'Заработка',
       icon: 'pi pi-wallet',
       routeTo: 'revenue'
     },
     {
-      label: 'Settings',
+      label: 'Поставки',
       icon: 'pi pi-sliders-h',
       routeTo: 'settings'
     },

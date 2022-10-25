@@ -64,3 +64,22 @@ body {
 .p-dialog {
     width: 90vw !important;
 }
+.p-toast-top-right {
+    top: 0 !important;
+    left: 0 !important;
+}
+.p-toast .p-toast-message.p-toast-message-info {
+    border: none !important;
+    background: rgba(#000000, 0.9) !important;
+    color: #ffffff !important;
+}
+.p-toast .p-toast-message.p-toast-message-info .p-toast-message-icon, .p-toast .p-toast-message.p-toast-message-info .p-toast-icon-close {
+    color: #ffffff !important;
+}
+.p-toast .p-toast-message .p-toast-message-content {
+    border: none !important;
+}
+
+.p-toast .p-toast-message {
+    border-radius: 0 !important;
+}

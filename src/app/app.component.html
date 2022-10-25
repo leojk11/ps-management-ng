@@ -1,5 +1,31 @@
-<!-- <router-outlet></router-outlet>
- -->
-
 <app-main-layout></app-main-layout>
-<p-toast position="bottom-center"></p-toast>
+
+<p-toast></p-toast>
+
+<p-dialog
+    [(visible)]="displayModal"
+    header="Login"
+    [modal]="true"
+    [closable]="false"
+>
+    <div class="form-group">
+        <label class="label">Username</label>
+        <div class="input">
+            <input
+                [(ngModel)]="username" 
+                type="text" 
+                pInputText 
+                placeholder="username...">
+        </div>
+    </div>
+
+    <div class="w-full flex justify-center align-center">
+        <button 
+            pButton
+            label="Login"
+            (click)="login()"
+            [disabled]="!username"
+            [class.p-disabled]="!username"
+        ></button>
+    </div>
+</p-dialog>

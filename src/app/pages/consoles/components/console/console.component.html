@@ -4,18 +4,18 @@
     </div>
 
     <div class="info">
-        <div class="model">Model: <b>{{ console.model }}</b></div>
+        <div class="model">Модел: <b>{{ console.model }}</b></div>
         <div 
             *ngIf="console.overall_time_played"
             class="total"
-        >{{ console.overall_time_played }} hrs</div>
+        >{{ console.overall_time_played }} часа</div>
     </div>
 
     <div class="buttons">
-        <button
+        <!-- <button
             pButton
             icon="pi pi-eye"
-        ></button>
+        ></button> -->
         <button
             pButton
             icon="pi pi-pencil"
@@ -30,6 +30,8 @@
 </div>
 
 <p-confirmDialog 
-    header="Confirmation" 
+    header="Потврди" 
     icon="pi pi-exclamation-triangle"
+    acceptLabel="Да"
+    rejectLabel="Не"
 ></p-confirmDialog>

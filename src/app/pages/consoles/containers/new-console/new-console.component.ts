@@ -11,7 +11,7 @@ import { Console } from '../../models/console.model';
 import { InputTextModule } from 'primeng/inputtext';
 import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
-import { SelectItem } from 'primeng/api';
+import { MessageService, SelectItem } from 'primeng/api';
 import { MultiSelectModule } from 'primeng/multiselect';
 
 @Component({
@@ -54,7 +54,8 @@ export class NewConsoleComponent implements OnInit {
     private fb: FormBuilder,
     private consolesService: ConsolesService,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) { 
     for (const [k, v] of Object.entries(ConsoleModels)) {
       this.consoleModelOptions.push({ label: v, value: v });
@@ -91,6 +92,11 @@ export class NewConsoleComponent implements OnInit {
     if (this.editMode) {
       this.consolesService.editConsole(this.form.value, this.consoleToEdit._id).subscribe({
         next: () => {
+          this.messageService.add({
+            severity: 'info', 
+            summary: 'Промените се успешно зачувани.', 
+            detail: 'Порака од серверот!',
+          });
           this.router.navigate(['/consoles']).then();
         },
         error: error => {
@@ -100,6 +106,11 @@ export class NewConsoleComponent implements OnInit {
     } else {
       this.consolesService.addNewConsole(this.form.value).subscribe({
         next: () => {
+          this.messageService.add({
+            severity: 'info', 
+            summary: 'Нова конзола е успешно додадена.', 
+            detail: 'Порака од серверот!',
+          });
           this.router.navigate(['/consoles']).then();
         },
         error: error => {

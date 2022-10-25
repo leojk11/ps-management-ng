@@ -2,12 +2,13 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 
+import { ConsolesService } from '../../services/consoles.service';
+import { Console } from '../../models/console.model';
+
 // primeng
 import { ButtonModule } from 'primeng/button';
-import { Console } from '../../models/console.model';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ConfirmationService } from 'primeng/api';
-import { ConsolesService } from '../../services/consoles.service';
+import { ConfirmationService, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-console',
@@ -33,24 +34,28 @@ export class ConsoleComponent implements OnInit {
   constructor(
     private router: Router,
     private confirmationService: ConfirmationService,
-    private consolesService: ConsolesService
+    private consolesService: ConsolesService,
+    private messageService: MessageService
   ) { }
 
-  ngOnInit(): void {
-    console.log('console', this.console);
-    
-  }
+  ngOnInit(): void { }
 
   goToEdit(): void {
-    this.router.navigate(['/new-console'], { queryParams: { id: this.console._id } });
+    this.router.navigate(['/new-console'], { queryParams: { id: this.console._id } }).then();
   }
 
   delete(): void {
     this.confirmationService.confirm({
-      message: 'Are you sure that you want to perform this action?',
+      message: `Дали си сигурен дека сакаш да ја избришеш конзолата <b>${ this.console.name }</b>?`,
       accept: () => {
         this.consolesService.deleteConsole(this.console._id).subscribe({
           next: () => {
+            this.messageService.add({
+              severity: 'info', 
+              summary: 'Конзолата е успешно избришана!', 
+              detail: 'Порака од серверот!',
+            });
+
             this.onDelete.emit();
           },
           error: error => {
