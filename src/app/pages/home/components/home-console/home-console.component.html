@@ -38,15 +38,24 @@
     [style]="{width: '50vw'}"
     [draggable]="false" 
     [resizable]="false">
+
     <p class="m-0"><b>Time played:</b> {{ timePlayed }}</p>
     <p class="m-0 mt-2"><b>Price to pay:</b> {{ priceToPay }}</p>
+
+    <div class="w-full mt-5">
+        <p-inputNumber
+            [(ngModel)]="manualPriceToPay"
+            [showButtons]="true"
+            [format]="false"
+        ></p-inputNumber>
+    </div>
 
     <ng-template pTemplate="footer">
         <p-button 
             icon="pi pi-check" 
-            (click)="displayModal=false" 
+            (click)="sendStop()" 
             label="Ok" 
-            styleClass="p-button-text"
+            [disabled]="disabledModalBtn"
         ></p-button>
     </ng-template>
 </p-dialog>

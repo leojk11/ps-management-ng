@@ -5,8 +5,9 @@ import { Console } from 'src/app/pages/consoles/models/console.model';
 import { ConsolesService } from 'src/app/pages/consoles/services/consoles.service';
 import * as dayjs from 'dayjs';
 import { DialogModule } from 'primeng/dialog';
-import { SettingsService } from 'src/app/pages/settings/services/settings.service';
 import { SettingsStore } from 'src/app/pages/settings/services/settings.store';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-home-console',
@@ -14,7 +15,9 @@ import { SettingsStore } from 'src/app/pages/settings/services/settings.store';
   imports: [
     CommonModule,
     ButtonModule,
-    DialogModule
+    DialogModule,
+    InputNumberModule,
+    FormsModule,ReactiveFormsModule
   ],
   templateUrl: './home-console.component.html',
   styleUrls: ['./home-console.component.scss']
@@ -24,16 +27,20 @@ export class HomeConsoleComponent implements OnInit {
   @Input() console: Console = {} as Console;
 
   displayModal: boolean = false;
+  disabledModalBtn: boolean = false;
 
   inProgress: boolean = false;
 
   priceToPay: number = 0;
+  manualPriceToPay: number = 0;
 
   pricePerHour: number = 0;
   hoursPlayed: number = 0;
   minutesPlayed: number = 0;
 
   timePlayed: string = '';
+
+  bodyToSave: any = {};
 
   constructor(
     private consolesService: ConsolesService,
@@ -52,9 +59,7 @@ export class HomeConsoleComponent implements OnInit {
     this.inProgress = true;
 
     const now = new Date();
-    console.log('now', now);
     this.console.start_time = now.toString();
-    
 
     this.consolesService.start(this.console._id, now).subscribe({
       next: () => {
@@ -72,7 +77,6 @@ export class HomeConsoleComponent implements OnInit {
 
     const startTime = new Date(this.console.start_time);
     const now = new Date();
-    now.setHours(now.getHours() + 5);
 
     var hours = Math.abs(startTime.valueOf() - now.valueOf()) / 3.6e6;
     
@@ -85,13 +89,42 @@ export class HomeConsoleComponent implements OnInit {
     this.timePlayed = `${ diffHrs }:${ diffMins }`;
 
     this.displayModal = true;
-    
-    this.consolesService.stop(this.console._id).subscribe({
+  }
+
+  sendStop(): void {
+
+    this.disabledModalBtn = true;
+
+    let priceToSave;
+    if (this.manualPriceToPay > 0) {
+      priceToSave = this.manualPriceToPay;
+    } else {
+      priceToSave = this.priceToPay;
+    }
+
+    const today = new Date();
+
+    const body = {
+      price_to_pay: priceToSave,
+      time_played: this.timePlayed,
+      date: dayjs(today).format('DD/MM/YYYY')
+    };
+
+    this.consolesService.stop(this.console._id, body).subscribe({
       next: () => {
         this.console.playing = false;
         this.inProgress = false;
+
+        this.timePlayed = '';
+        this.manualPriceToPay = 0;
+        this.priceToPay = 0;
+
+        this.displayModal = false;
+        this.disabledModalBtn = false;
+
       },
       error: error => {
+        this.disabledModalBtn = false;
         console.log(error);
       }
     });

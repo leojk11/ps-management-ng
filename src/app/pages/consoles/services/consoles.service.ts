@@ -40,9 +40,9 @@ export class ConsolesService {
     return this.http.patch<MessageResponse>(path, { time });
   }
 
-  stop(id: string): Observable<MessageResponse> {
+  stop(id: string, body: any): Observable<MessageResponse> {
     const path = `${ this.apiUrl }/consoles/${ id }/stop`;
-    return this.http.patch<MessageResponse>(path, {});
+    return this.http.patch<MessageResponse>(path, body);
   }
 
   deleteConsole(id: string): Observable<MessageResponse> {
