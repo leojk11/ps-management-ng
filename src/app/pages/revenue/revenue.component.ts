@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { SingleRevenueComponent } from './components/single-revenue/single-revenue.component';
+import { SpinnerComponent } from 'src/app/shared/components/spinner/spinner.component';
+
+import { RevenueStore } from './services/revenue.store';
 
 // primeng
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
-import { SingleRevenueComponent } from './components/single-revenue/single-revenue.component';
+
 
 @Component({
   selector: 'app-revenue',
@@ -13,16 +17,28 @@ import { SingleRevenueComponent } from './components/single-revenue/single-reven
     CommonModule,
     CalendarModule,
     ButtonModule,
-    SingleRevenueComponent
+    SingleRevenueComponent,
+    SpinnerComponent
+  ],
+  providers: [
+    RevenueStore
   ],
   templateUrl: './revenue.component.html',
   styleUrls: ['./revenue.component.scss']
 })
 export class RevenueComponent implements OnInit {
 
-  constructor() { }
+  constructor(
+    public revenueStore: RevenueStore
+  ) { }
 
   ngOnInit(): void {
+    this.revenueStore.getRevenues();
+    this.revenueStore.getTotalEarning();
   }
 
+  testDateChange(event: any): void {
+    console.log('date change event', event);
+    
+  }
 }
