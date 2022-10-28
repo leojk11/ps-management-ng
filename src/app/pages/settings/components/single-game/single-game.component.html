@@ -1,0 +1,12 @@
+<div class="single-card-item mt-2" (click)="onClick()">
+    <p>{{ game.name }} {{ game.year }}</p>
+
+    <i (click)="delete($event)" class="pi pi-trash"></i>
+</div>
+
+<p-confirmDialog 
+    header="Потврди" 
+    icon="pi pi-exclamation-triangle"
+    acceptLabel="Да"
+    rejectLabel="Не"
+></p-confirmDialog>

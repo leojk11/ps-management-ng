@@ -16,8 +16,41 @@
                     </div>
                 </div>
             </div>
+
+            <div class="card mt-5">
+                <div class="flex justify-between items-center">
+                    <p>Игри</p>
+                    <button
+                        pButton
+                        icon="pi pi-plus"
+                        type="button"
+                        (click)="toggleModal()"
+                    ></button>
+                </div>
+
+                <ng-container *ngIf="state.gamesLoaded">
+                    <div class="mt-3">
+                        <p class="text-center" *ngIf="state.games.length === 0">
+                            Во моментов немате додадено игри.
+                        </p>
+
+                        <app-single-game
+                            *ngFor="let game of state.games"
+                            [game]="game"
+                            (onDelete)="deleteGame()"
+                            (toEdit)="toEditGame($event)"
+                        ></app-single-game>
+                    </div>
+                </ng-container>
+
+                <div 
+                    *ngIf="!state.gamesLoaded" 
+                    class="w-full h-full flex justify-center align-center">
+                    <app-spinner></app-spinner>
+                </div>
+            </div>
         
-            <div class="flex justify-center align-center mt-3">
+            <div class="flex justify-center align-center mt-5">
                 <button
                     pButton
                     icon="pi pi-save"
@@ -33,3 +66,42 @@
         <app-spinner></app-spinner>
     </div>
 </div>
+
+<p-dialog 
+    [(visible)]="displayModal"
+    header="Додај нова игра"
+    [modal]="true">
+
+    <form [formGroup]="gamesForm" (ngSubmit)="handleGameFormSubmit()">
+        <div class="form-group">
+            <label class="label">Име:</label>
+            <div class="input">
+                <input 
+                    type="text"
+                    pInputText 
+                    placeholder="Име..."
+                    formControlName="name">
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label class="label">Година:</label>
+            <div class="input">
+                <input 
+                    type="text" 
+                    pInputText 
+                    placeholder="Година..."
+                    formControlName="year">
+            </div>
+        </div>
+    
+        <div class="flex justify-center align-center">
+            <button 
+                pButton 
+                icon="pi pi-plus" 
+                label="Додај"
+                [disabled]="!gamesForm.valid"
+            ></button>
+        </div>
+    </form>
+</p-dialog>

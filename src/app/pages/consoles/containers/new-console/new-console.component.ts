@@ -13,6 +13,8 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ButtonModule } from 'primeng/button';
 import { MessageService, SelectItem } from 'primeng/api';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { SettingsService } from 'src/app/pages/settings/services/settings.service';
+import { SettingsStore } from 'src/app/pages/settings/services/settings.store';
 
 @Component({
   selector: 'app-new-console',
@@ -44,18 +46,21 @@ export class NewConsoleComponent implements OnInit {
   consoleModelOptions: SelectItem[] = [];
 
   gameOptions: SelectItem[] = [
-    { label: 'Fifa 22', value: 'Fifa22' },
-    { label: 'Pes 22', value: 'Pes22' },
-    { label: 'Nba 22', value: 'Nba22' }
+
   ];
   selectedGames: string[] = [];
+
+  // { label: 'Fifa 22', value: 'Fifa22' },
+  // { label: 'Pes 22', value: 'Pes22' },
+  // { label: 'Nba 22', value: 'Nba22' }
 
   constructor(
     private fb: FormBuilder,
     private consolesService: ConsolesService,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private settingsStore: SettingsStore
   ) { 
     for (const [k, v] of Object.entries(ConsoleModels)) {
       this.consoleModelOptions.push({ label: v, value: v });
@@ -63,6 +68,12 @@ export class NewConsoleComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    if (this.settingsStore.state.games.length > 0) {
+      for (const game of this.settingsStore.state.games) {
+        this.gameOptions.push({ label: `${ game.name } ${ game.year }`, value: `${ game.year } ${ game.year }` });
+      }
+    }
+
     this.route.queryParams.subscribe({
       next: params => {
         if (params['id']) {
