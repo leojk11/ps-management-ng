@@ -64,6 +64,7 @@ export class HomeConsoleComponent implements OnInit {
     this.consolesService.start(this.console._id, now).subscribe({
       next: () => {
         this.console.playing = true;
+        this.console.status = 'BUSY';
         this.inProgress = false;
       },
       error: error => {
@@ -113,6 +114,7 @@ export class HomeConsoleComponent implements OnInit {
     this.consolesService.stop(this.console._id, body).subscribe({
       next: () => {
         this.console.playing = false;
+        this.console.status = 'FREE';
         this.inProgress = false;
 
         this.timePlayed = '';

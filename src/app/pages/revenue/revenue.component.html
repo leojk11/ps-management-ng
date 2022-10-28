@@ -38,34 +38,49 @@
     <div class="card mt-7 shadow-md">
         <div class="calendars">
             <p-calendar
+                [(ngModel)]="day"
                 placeholder="ден..."
                 appendTo="body"
                 dateFormat="dd"
-                (onSelect)="testDateChange($event)"
+                (onSelect)="dateChange($event, 'day')"
             ></p-calendar>
             <p-calendar
+                [(ngModel)]="month"
                 placeholder="месец..."
                 appendTo="body"
                 view="month"
                 dateFormat="mm"
+                (onSelect)="dateChange($event, 'month')"
             ></p-calendar>
             <p-calendar
+                [(ngModel)]="year"
                 placeholder="година..."
                 appendTo="body"
                 view="year"
                 dateFormat="yy"
+                (onSelect)="dateChange($event, 'year')"
             ></p-calendar>
         </div>
 
-        <div class="buttons mt-3">
+        <div class="buttons mt-3 gap-2">
             <button
                 pButton
                 label="Филтрирај"
+                (click)="filter()"
+            ></button>
+
+            <button
+                pButton
+                label="Ресетирај"
+                (click)="resetFilter()"
             ></button>
         </div>
 
         <ng-container *ngIf="state.loaded">
             <div class="revenues mt-3">
+                <p 
+                    class="text-center"
+                    *ngIf="state.revenues.length === 0">Во избраниот период немате заработка.</p>
                 <app-single-revenue
                     *ngFor="let revenue of state.revenues"
                     [revenue]="revenue"

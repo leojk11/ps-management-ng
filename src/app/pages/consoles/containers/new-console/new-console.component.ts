@@ -70,7 +70,7 @@ export class NewConsoleComponent implements OnInit {
   ngOnInit(): void {
     if (this.settingsStore.state.games.length > 0) {
       for (const game of this.settingsStore.state.games) {
-        this.gameOptions.push({ label: `${ game.name } ${ game.year }`, value: `${ game.year } ${ game.year }` });
+        this.gameOptions.push({ label: `${ game.name } ${ game.year }`, value: game._id });
       }
     }
 

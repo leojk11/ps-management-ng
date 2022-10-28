@@ -1,15 +1,19 @@
+import { HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
+import { catchError, EMPTY, Observable, switchMap, tap } from 'rxjs';
 import { Revenue } from '../models/revenue.model';
 import { TotalEarning } from '../models/totalEarning.model';
-import { RevenueService } from './revenue.service';
+import { RevenueParams, RevenueService } from './revenue.service';
 
 export interface RevenueState {
-  revenues: Revenue[];
+  revenues: any;
   totalEarning: TotalEarning;
 
   totalEarningLoaded: boolean;
   loaded: boolean;
+
+  params: RevenueParams;
 }
 
 export const initialState: RevenueState = {
@@ -17,7 +21,9 @@ export const initialState: RevenueState = {
   totalEarning: {} as TotalEarning,
   
   totalEarningLoaded: false,
-  loaded: false
+  loaded: false,
+
+  params: {}
 }
 
 @Injectable()
@@ -51,6 +57,31 @@ export class RevenueStore extends ComponentStore<RevenueState> {
     });
   }
 
+  load = this.effect((params$: Observable<Partial<RevenueParams>>) => params$
+    .pipe(tap(() => this.patchState({ loaded: false, revenues: [] })),
+      switchMap(params => {
+        const currentParams = this.get(s => s.params);
+        const newParams = { ...currentParams, ...params };
+
+        return this.revenueService.filterRevenue(newParams).pipe(tap((response: HttpResponse<Revenue[]>) => {
+              this.patchState({
+                loaded: true,
+                params: newParams,
+                revenues: response.body
+              });
+            }
+          ), catchError(() => {
+              this.patchState({
+                revenues: [], loaded: false,
+                params: initialState.params
+              });
+              return EMPTY;
+            }
+          )
+        );
+      })
+    ));
+
   getTotalEarning(): void {
     this.setTotaleEarningLoaded(false);
     this.revenueService.getTotalEarning().subscribe({
@@ -61,6 +92,12 @@ export class RevenueStore extends ComponentStore<RevenueState> {
         })
       }
     })
+  }
+
+  resetParams(): void {
+    this.patchState({
+      params: {}
+    });
   }
 
 }
