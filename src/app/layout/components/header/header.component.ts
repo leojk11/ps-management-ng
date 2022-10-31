@@ -6,6 +6,7 @@ import { AuthService } from 'src/app/core/services/auth.service';
 // primeng
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { ButtonModule } from 'primeng/button';
+import { APP_VERSION } from 'src/app/core/data/staticData';
 
 @Component({
   selector: 'app-header',
@@ -20,6 +21,8 @@ import { ButtonModule } from 'primeng/button';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
+
+  version: string = APP_VERSION;
 
   constructor(
     public authState: AuthService,

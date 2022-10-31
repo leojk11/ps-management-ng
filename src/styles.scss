@@ -3,6 +3,29 @@
 @tailwind components;
 @tailwind utilities;
 
+.free {
+    background-color: #D2FDBB !important;
+}
+.busy {
+    background-color: #fed4d2 !important;
+}
+
+.main-loader {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    img {
+        width: 150px;
+        height: 150px;
+    }
+}
+
 .cp {
     cursor: pointer;
 }
@@ -65,6 +88,7 @@ body {
     border: 1px solid rgb(222, 230, 240);
     border-radius: 15px;
 }
+
 // PRIMENG
 
 .p-button {
@@ -101,4 +125,8 @@ body {
 }
 .p-calendar {
     width: 100% !important;
+}
+
+.p-dialog .p-dialog-footer {
+    padding: 1.15rem !important;
 }

@@ -133,6 +133,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
             next: gamesRes => {
               this.settingsStore.setGames(gamesRes);
               this.settingsStore.pathGamesLoaded(true);
+
+              this.gamesForm.reset();
             },
             error: error => {
               this.messageService.add({
@@ -160,6 +162,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
             next: gamesRes => {
               this.settingsStore.setGames(gamesRes);
               this.settingsStore.pathGamesLoaded(true);
+
+              this.gamesForm.reset();
             },
             error: error => {
               this.messageService.add({

@@ -28,7 +28,7 @@ export class RevenueService {
 
   getTotalEarning(): Observable<TotalEarning> {
     const now = new Date();
-    const path = `${ this.apiUrl }/revenue/revenue/${ now.getDate() }/${ now.getFullYear() }`;
+    const path = `${ this.apiUrl }/revenue/revenue/${ now.getDate() }/${ now.getMonth() + 1 }/${ now.getFullYear() }`;
     return this.http.get<TotalEarning>(path);
   }
 

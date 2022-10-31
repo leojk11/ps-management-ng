@@ -9,6 +9,7 @@ import { Console } from '../../models/console.model';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-console',
@@ -17,7 +18,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     CommonModule,
     ButtonModule,
     RouterModule,
-    ConfirmDialogModule
+    ConfirmDialogModule,
+    DialogModule
   ],
   providers: [
     ConfirmationService
@@ -31,6 +33,10 @@ export class ConsoleComponent implements OnInit {
 
   @Output() onDelete = new EventEmitter<any>();
 
+  timePlayed: string = '';
+
+  displayInfoModal: boolean = false;
+
   constructor(
     private router: Router,
     private confirmationService: ConfirmationService,
@@ -38,13 +44,28 @@ export class ConsoleComponent implements OnInit {
     private messageService: MessageService
   ) { }
 
-  ngOnInit(): void { }
+  ngOnInit(): void { 
+    const hours = Math.floor(this.console.overall_time_played / 60);
+    const minutes = this.console.overall_time_played % 60;
 
-  goToEdit(): void {
-    this.router.navigate(['/new-console'], { queryParams: { id: this.console._id } }).then();
+    this.timePlayed = `${ hours }:${ minutes }`;
   }
 
-  delete(): void {
+  toggleInfoModal(): void {
+    this.displayInfoModal = !this.displayInfoModal;
+  }
+
+  goToEdit(event: any): void {
+    event.stopPropagation();
+
+    this.router.navigate(['/new-console'], { 
+      queryParams: { id: this.console._id } 
+    }).then();
+  }
+
+  delete(event: any): void {
+    event.stopPropagation();
+
     this.confirmationService.confirm({
       message: `Дали си сигурен дека сакаш да ја избришеш конзолата <b>${ this.console.name }</b>?`,
       accept: () => {
@@ -58,8 +79,12 @@ export class ConsoleComponent implements OnInit {
 
             this.onDelete.emit();
           },
-          error: error => {
-            console.log(error);
+          error: () => {
+            this.messageService.add({
+              severity: 'info', 
+              summary: 'Грешка при бришење на конзолата!', 
+              detail: 'Порака од серверот!',
+            });
           }
         });
       }

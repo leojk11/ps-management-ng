@@ -45,14 +45,8 @@ export class NewConsoleComponent implements OnInit {
 
   consoleModelOptions: SelectItem[] = [];
 
-  gameOptions: SelectItem[] = [
-
-  ];
+  gameOptions: SelectItem[] = [];
   selectedGames: string[] = [];
-
-  // { label: 'Fifa 22', value: 'Fifa22' },
-  // { label: 'Pes 22', value: 'Pes22' },
-  // { label: 'Nba 22', value: 'Nba22' }
 
   constructor(
     private fb: FormBuilder,
@@ -70,7 +64,10 @@ export class NewConsoleComponent implements OnInit {
   ngOnInit(): void {
     if (this.settingsStore.state.games.length > 0) {
       for (const game of this.settingsStore.state.games) {
-        this.gameOptions.push({ label: `${ game.name } ${ game.year }`, value: game._id });
+        this.gameOptions.push({ 
+          label: `${ game.name } ${ game.year }`, 
+          value: `${ game.name } ${ game.year }` 
+        });
       }
     }
 

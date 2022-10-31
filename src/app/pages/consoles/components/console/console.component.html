@@ -1,4 +1,4 @@
-<div class="console mt-2 shadow-md">
+<div class="console mt-2 shadow-md" (click)="toggleInfoModal()">
     <div class="label">
         <h1>{{ console.name }}</h1>
     </div>
@@ -8,7 +8,7 @@
         <div 
             *ngIf="console.overall_time_played"
             class="total"
-        >{{ console.overall_time_played }} часа</div>
+        >{{ timePlayed }} часа</div>
     </div>
 
     <div class="buttons">
@@ -19,12 +19,12 @@
         <button
             pButton
             icon="pi pi-pencil"
-            (click)="goToEdit()"
+            (click)="goToEdit($event)"
         ></button>
         <button
             pButton
             icon="pi pi-trash"
-            (click)="delete()"
+            (click)="delete($event)"
         ></button>
     </div>
 </div>
@@ -35,3 +35,41 @@
     acceptLabel="Да"
     rejectLabel="Не"
 ></p-confirmDialog>
+
+<p-dialog
+    [(visible)]="displayInfoModal"
+    header="Детали за конзолата"
+    [modal]="true"
+    [dismissableMask]="true"
+>
+    <div class="w-full">
+        <div class="form-group">
+            <label class="label">Име</label>
+            <div class="input">
+                <p>{{ console.name }}</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Модел</label>
+            <div class="input">
+                <p>{{ console.model }}</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Играно</label>
+            <div class="input">
+                <p>{{ console.overall_time_played ? timePlayed : 0 }} часа</p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="label">Игри</label>
+            <div class="input">
+                <p *ngIf="console.games">{{ console.games }}</p>
+                <p *ngIf="!console.games">Немате избрано игри.</p>
+            </div>
+        </div>
+    </div>
+</p-dialog>

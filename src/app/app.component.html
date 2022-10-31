@@ -1,4 +1,13 @@
-<app-main-layout></app-main-layout>
+<app-main-layout
+    *ngIf="loaded"
+></app-main-layout>
+
+<div 
+    *ngIf="!loaded"
+    class="main-loader">
+    <img src="/assets/img/ps_logo.png">
+    <app-spinner></app-spinner>
+</div>
 
 <p-toast></p-toast>
 

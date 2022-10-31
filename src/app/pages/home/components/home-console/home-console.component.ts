@@ -35,12 +35,20 @@ export class HomeConsoleComponent implements OnInit {
   manualPriceToPay: number = 0;
 
   pricePerHour: number = 0;
-  hoursPlayed: number = 0;
-  minutesPlayed: number = 0;
 
   timePlayed: string = '';
+  overallTimePlayed: string = '';
+  minutesPlayed: number = 0;
 
   bodyToSave: any = {};
+
+  hrsDiff: number = 0;
+  minstDiff: number = 0;
+
+  mapConsoleStatus: any = {
+    'FREE': 'Слободно',
+    'BUSY': 'Зафатено'
+  }
 
   constructor(
     private consolesService: ConsolesService,
@@ -53,6 +61,11 @@ export class HomeConsoleComponent implements OnInit {
         this.pricePerHour = state.settings.price_per_hour;
       }
     });
+
+    const hours = Math.floor(this.console.overall_time_played / 60);
+    const minutes = this.console.overall_time_played % 60;
+
+    this.overallTimePlayed = `${ hours }:${ minutes }`;
   }
 
   start(): void {
@@ -78,17 +91,20 @@ export class HomeConsoleComponent implements OnInit {
 
     const startTime = new Date(this.console.start_time);
     const now = new Date();
+    // now.setHours(22, 0, 0);
 
-    var hours = Math.abs(startTime.valueOf() - now.valueOf()) / 3.6e6;
-    
-    const priceToPay = Math.floor(hours) * this.pricePerHour;
-    this.priceToPay = priceToPay;
-
-    var diffMs = (now.valueOf() - startTime.valueOf());
-    var diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
-    var diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
+    const diffMs = (now.valueOf() - startTime.valueOf());
+    const diffHrs = Math.floor((diffMs % 86400000) / 3600000); // hours
+    const diffMins = Math.round(((diffMs % 86400000) % 3600000) / 60000); // minutes
     this.timePlayed = `${ diffHrs }:${ diffMins }`;
 
+    const hoursInMinutes = diffHrs * 60;
+    const allMinutes = hoursInMinutes + diffMins;
+    this.minutesPlayed = allMinutes;
+    const endHours = allMinutes / 60;
+
+    this.priceToPay = Math.ceil(endHours * this.pricePerHour);
+    
     this.displayModal = true;
   }
 
@@ -107,7 +123,7 @@ export class HomeConsoleComponent implements OnInit {
 
     const body = {
       price_to_pay: priceToSave,
-      time_played: this.timePlayed,
+      time_played: this.minutesPlayed,
       date: dayjs(today).format('DD/MM/YYYY')
     };
 

@@ -1,17 +1,21 @@
 <div 
     class="home-console shadow-md p-2 mb-2"
-    [class.p-disabled]="inProgress">
+    [class.p-disabled]="inProgress"
+    [class.free]="console.status === 'FREE'"
+    [class.busy]="console.status === 'BUSY'">
     <div class="label">
         <div class="top">
             <h1>{{ console.name }}</h1>
         </div>
         <div class="bottom">
-            <p>{{ console.status }}</p>
+            <p>{{ mapConsoleStatus[console.status] }}</p>
         </div>
     </div>
 
     <div class="time">
-        <h1>{{ console.today_time_played }} hrs</h1>
+        <!-- <h1>{{ console.today_time_played }} hrs</h1> -->
+        <p *ngIf="console.overall_time_played">{{ overallTimePlayed }} h</p>
+        <p *ngIf="!console.overall_time_played">0 h</p>
     </div>
 
     <div class="buttons">
@@ -32,29 +36,33 @@
 </div>
 
 <p-dialog 
-    header="Info" 
+    header="Крај на играње" 
     [(visible)]="displayModal" 
     [modal]="true" 
     [style]="{width: '50vw'}"
     [draggable]="false" 
-    [resizable]="false">
+    [resizable]="false"
+    (onHide)="inProgress = false">
 
-    <p class="m-0"><b>Time played:</b> {{ timePlayed }}</p>
-    <p class="m-0 mt-2"><b>Price to pay:</b> {{ priceToPay }}</p>
+    <p class="m-0 text-lg"><b>Време:</b> {{ timePlayed }}</p>
+    <p class="m-0 text-lg price-modal-data"><b>Цена:</b> {{ priceToPay }} МКД</p>
 
-    <div class="w-full mt-5">
-        <p-inputNumber
-            [(ngModel)]="manualPriceToPay"
-            [showButtons]="true"
-            [format]="false"
-        ></p-inputNumber>
+    <div class="form-group mt-5">
+        <label class="label text-lg">Сума:</label>
+        <div class="input">
+            <p-inputNumber
+                [(ngModel)]="manualPriceToPay"
+                [showButtons]="true"
+                [format]="false"
+            ></p-inputNumber>
+        </div>
     </div>
 
     <ng-template pTemplate="footer">
         <p-button 
             icon="pi pi-check" 
             (click)="sendStop()" 
-            label="Ok" 
+            label="ОК" 
             [disabled]="disabledModalBtn"
         ></p-button>
     </ng-template>

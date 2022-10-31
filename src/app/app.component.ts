@@ -6,6 +6,7 @@ import { MainLayoutComponent } from './layout/main-layout.component';
 import { AuthService } from './core/services/auth.service';
 import { SettingsStore } from './pages/settings/services/settings.store';
 import { SettingsService } from './pages/settings/services/settings.service';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 
 // primeng
 import { ToastModule } from 'primeng/toast';
@@ -17,7 +18,6 @@ import { ButtonModule } from 'primeng/button';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss'],
   standalone: true,
   imports: [
     CommonModule, 
@@ -27,11 +27,14 @@ import { ButtonModule } from 'primeng/button';
     InputTextModule,
     ButtonModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SpinnerComponent
   ],
   providers: [MessageService]
 })
 export class AppComponent implements OnInit {
+
+  loaded: boolean = false;
 
   displayModal: boolean = false;
 
@@ -54,7 +57,17 @@ export class AppComponent implements OnInit {
 
     this.settingsService.getSettings().subscribe({
       next: res => {
-        this.settingsStore.setSettings(res);
+        this.settingsService.getGames().subscribe({
+          next: gamesRes => {
+            this.settingsStore.setSettings(res);
+            this.settingsStore.setGames(gamesRes);
+
+            this.loaded = true;
+          },
+          error: () => {
+            this.loaded = true;
+          }
+        })
       }
     });
   }
