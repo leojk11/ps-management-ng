@@ -7,10 +7,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RevenueStore } from './services/revenue.store';
 import { RevenueParams } from './services/revenue.service';
 
+import { ConsolesService } from '../consoles/services/consoles.service';
+import { Console } from '../consoles/models/console.model';
+
 // primeng
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
-
 
 @Component({
   selector: 'app-revenue',
@@ -38,15 +40,25 @@ export class RevenueComponent implements OnInit {
   month: any = null;
   year: any = null;
 
+  mapConsole: { [k: string]: string } = {};
+
   constructor(
-    public revenueStore: RevenueStore
+    public revenueStore: RevenueStore,
+    private consoleService: ConsolesService
   ) { }
 
   ngOnInit(): void {
     // this.revenueStore.getRevenues();
-    this.revenueStore.getTotalEarning();
+    this.consoleService.getConsoles().subscribe({
+      next: consoles => {
+        for (const console of consoles) {
+          this.mapConsole[console._id] = `${ console.name }`;
+        }
 
-    this.revenueStore.load({});
+        this.revenueStore.getTotalEarning();
+        this.revenueStore.load({});
+      }
+    });
   }
 
   dateChange(event: any, type: string): void {

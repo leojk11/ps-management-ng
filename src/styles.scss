@@ -87,6 +87,18 @@ body {
 
     border: 1px solid rgb(222, 230, 240);
     border-radius: 15px;
+
+    .date {
+        width: 30%;
+    }
+    .console {
+        width: 30%;
+        text-align: center;
+    }
+    .price {
+        width: 40%;
+        text-align: end;
+    }
 }
 
 // PRIMENG
@@ -128,5 +140,9 @@ body {
 }
 
 .p-dialog .p-dialog-footer {
+    padding: 1.15rem !important;
+}
+
+.p-dialog .p-dialog-content {
     padding: 1.15rem !important;
 }

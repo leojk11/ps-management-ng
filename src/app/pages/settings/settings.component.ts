@@ -47,6 +47,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   displayModal: boolean = false;
 
   gameToEdit: Game = {} as Game;
+  header: string = '';
 
   constructor(
     public settingsStore: SettingsStore,
@@ -186,6 +187,11 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   toggleModal(): void {
+    if (this.gameToEdit._id) {
+      this.header = `Измени ја играта`;
+    } else {
+      this.header = `Додај нова игра`;
+    }
     this.displayModal = !this.displayModal;
   }
 
@@ -194,6 +200,10 @@ export class SettingsComponent implements OnInit, OnDestroy {
     this.gamesForm.patchValue({ ...game });
 
     this.toggleModal();
+  }
+  resetGameToEdit(): void {
+    this.gameToEdit = {} as Game;
+    this.gamesForm.reset();
   }
 
   deleteGame(): void {

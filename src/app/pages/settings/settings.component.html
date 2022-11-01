@@ -69,8 +69,9 @@
 
 <p-dialog 
     [(visible)]="displayModal"
-    header="Додај нова игра"
-    [modal]="true">
+    [header]="header"
+    [modal]="true"
+    (onHide)="resetGameToEdit()">
 
     <form [formGroup]="gamesForm" (ngSubmit)="handleGameFormSubmit()">
         <div class="form-group">
@@ -97,6 +98,14 @@
     
         <div class="flex justify-center align-center">
             <button 
+                *ngIf="gameToEdit._id"
+                pButton 
+                icon="pi pi-save"
+                label="Измени"
+                [disabled]="!gamesForm.valid"
+            ></button>
+            <button 
+                *ngIf="!gameToEdit._id"
                 pButton 
                 icon="pi pi-plus" 
                 label="Додај"
