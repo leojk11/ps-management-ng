@@ -32,19 +32,21 @@ export class RevenueService {
     return this.http.get<TotalEarning>(path);
   }
 
+  getTotalDrinksEarnings(): Observable<TotalEarning> {
+    const now = new Date();
+    const path = `${ this.apiUrl }/revenue/revenue/drink/${ now.getDate() }/${ now.getMonth() + 1 }/${ now.getFullYear() }`;
+    return this.http.get<TotalEarning>(path);
+  }
+
   filterRevenue(params: RevenueParams): Observable<any> {
     const path = `${ this.apiUrl }/revenue`;
     return this.http.get(path, { observe: 'response', params: this.getRevenueParams(params) });
   }
 
   getRevenueParams(params: RevenueParams): HttpParams {
-    console.log('before http params', params);
-    
     let httpParams = new HttpParams;
 
     if (params.day) {
-      console.log('in if params day', params.day);
-      
       httpParams = httpParams.set('day', params.day.toString());
     } 
 
@@ -56,8 +58,6 @@ export class RevenueService {
       httpParams = httpParams.set('year', params.year);
     }
 
-    
- 
     return httpParams;
   }
 }

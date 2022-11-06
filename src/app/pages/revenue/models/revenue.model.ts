@@ -6,6 +6,8 @@ export interface Revenue {
     total_earning: number;
 
     date: string;
+    time: string;
+    
     day: number;
     month: number;
     year: number;

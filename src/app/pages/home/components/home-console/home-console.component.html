@@ -13,9 +13,9 @@
     </div>
 
     <div class="time">
-        <!-- <h1>{{ console.today_time_played }} hrs</h1> -->
-        <p *ngIf="console.overall_time_played">{{ overallTimePlayed }} h</p>
-        <p *ngIf="!console.overall_time_played">0 h</p>
+        <p *ngIf="minutesPlayed > 0">{{ timePlayed }} h</p>
+        <p *ngIf="minutesPlayed <= 0">0 h</p>
+        <p>{{ priceToPay }} МКД</p>
     </div>
 
     <div class="buttons">

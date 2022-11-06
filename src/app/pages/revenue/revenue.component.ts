@@ -57,6 +57,8 @@ export class RevenueComponent implements OnInit {
 
         this.revenueStore.getTotalEarning();
         this.revenueStore.load({});
+
+        this.revenueStore.getTotalDrinkEarning();
       }
     });
   }

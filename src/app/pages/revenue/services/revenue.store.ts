@@ -10,8 +10,13 @@ export interface RevenueState {
   revenues: any;
   totalEarning: TotalEarning;
 
+  drinkRevenues: any;
+  totalDrinkEarning: TotalEarning;
+
   totalEarningLoaded: boolean;
   loaded: boolean;
+  drinksLoaded: boolean;
+  totalDrinkEarningsLoaded: boolean;
 
   params: RevenueParams;
 }
@@ -19,9 +24,14 @@ export interface RevenueState {
 export const initialState: RevenueState = {
   revenues: [],
   totalEarning: {} as TotalEarning,
+
+  drinkRevenues: [],
+  totalDrinkEarning: {} as TotalEarning,
   
   totalEarningLoaded: false,
   loaded: false,
+  drinksLoaded: false,
+  totalDrinkEarningsLoaded: false,
 
   params: {}
 }
@@ -40,6 +50,13 @@ export class RevenueStore extends ComponentStore<RevenueState> {
   }
   setTotaleEarningLoaded(totalEarningLoaded: boolean): void {
     this.patchState({ totalEarningLoaded });
+  }
+
+  setDrinkLoaded(drinksLoaded: boolean): void {
+    this.patchState({ drinksLoaded });
+  }
+  setTotalDrinksEarningsLoaded(totalDrinkEarningsLoaded: boolean): void {
+    this.patchState({ totalDrinkEarningsLoaded });
   }
 
   getRevenues(): void {
@@ -89,9 +106,21 @@ export class RevenueStore extends ComponentStore<RevenueState> {
         this.patchState({
           totalEarning: res,
           totalEarningLoaded: true
-        })
+        });
       }
-    })
+    });
+  }
+
+  getTotalDrinkEarning(): void {
+    this.setTotalDrinksEarningsLoaded(false);
+    this.revenueService.getTotalDrinksEarnings().subscribe({
+      next: res => {
+        this.patchState({
+          totalDrinkEarning: res,
+          totalDrinkEarningsLoaded: true
+        });
+      }
+    });
   }
 
   resetParams(): void {

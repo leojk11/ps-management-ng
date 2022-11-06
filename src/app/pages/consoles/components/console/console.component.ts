@@ -48,7 +48,7 @@ export class ConsoleComponent implements OnInit {
     const hours = Math.floor(this.console.overall_time_played / 60);
     const minutes = this.console.overall_time_played % 60;
 
-    this.timePlayed = `${ hours }:${ minutes }`;
+    this.timePlayed = `${ (hours < 10 ? '0' + hours : hours) }:${ (minutes < 10 ? '0' + minutes : minutes) }`;
   }
 
   toggleInfoModal(): void {

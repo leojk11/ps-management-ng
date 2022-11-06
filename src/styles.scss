@@ -89,10 +89,10 @@ body {
     border-radius: 15px;
 
     .date {
-        width: 30%;
+        width: 50%;
     }
     .console {
-        width: 30%;
+        width: 10%;
         text-align: center;
     }
     .price {
@@ -145,4 +145,24 @@ body {
 
 .p-dialog .p-dialog-content {
     padding: 1.15rem !important;
+}
+
+.p-tabview .p-tabview-panels {
+    background-color: transparent !important;
+    padding: 0 !important;
+
+    margin-top: 1rem;
+}
+.p-tabview .p-tabview-nav li.p-highlight .p-tabview-nav-link {
+    color: #000000 !important; 
+    border-color: #000000 !important;
+}
+
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+    transition: none !important;
+    background: rgba(#ffffff, 0.6);
+}
+
+.p-tabview .p-tabview-nav {
+    background: rgba(#ffffff, 0.6);
 }

@@ -2,23 +2,60 @@
     class="w-full h-full p-2" 
     *ngIf="consolesStore.state$ | async as state">
     <ng-container *ngIf="state.loaded">
-        <app-home-console
-            *ngFor="let console of state.consoles"
-            [console]="console"
-        ></app-home-console>
+        <p-tabView [(activeIndex)]="tabsActiveIndex">
+            <p-tabPanel header="Конзоли">
+                <app-home-console
+                    *ngFor="let console of state.consoles"
+                    [console]="console"
+                ></app-home-console>
+        
+                <div 
+                    *ngIf="state.consoles.length === 0"
+                    class="w-full h-full flex flex-wrap justify-center align-center mt-20">
+                    <h3 class="w-full text-center">Во моментов немате додаено конзоли.</h3>
+        
+                    <button
+                        pButton
+                        label="Додај конзола"
+                        class="w-full mt-5"
+                        routerLink="/new-console"
+                    ></button>
+                </div>
+            </p-tabPanel>
 
-        <div 
-            *ngIf="state.consoles.length === 0"
-            class="w-full h-full flex flex-wrap justify-center align-center mt-20">
-            <h3 class="w-full text-center">Во моментов немате додаено конзоли.</h3>
+            <p-tabPanel header="Пијалоци">
+                <ng-container *ngIf="drinksStore.state$ | async as drinksState">
+                    <div class="w-full flex justify-center">
+                        <button 
+                            pButton
+                            label="Додај нов пијалок"
+                            (click)="toggleDrinksModal(false)"
+                        ></button>
+                    </div>
+    
+                    <ng-container *ngIf="drinksState.loaded">
+                        <div class="mt-3">
+                            <app-home-drink
+                                *ngFor="let drink of drinksState.drinks"
+                                [drink]="drink"
+                                (toggleEditModal)="toggleDrinksModal(true, $event)"
+                            ></app-home-drink>
 
-            <button
-                pButton
-                label="Додај конзола"
-                class="w-full mt-5"
-                routerLink="/new-console"
-            ></button>
-        </div>
+                            <div 
+                                *ngIf="drinksState.drinks.length === 0"
+                                class="w-full h-full flex flex-wrap justify-center align-center mt-20">
+                                <h3 class="w-full text-center">Во моментов немате додаено пијалоци.</h3>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div 
+                        *ngIf="!drinksState.loaded" 
+                        class="w-full h-full flex justify-center align-center">
+                        <app-spinner></app-spinner>
+                    </div>
+                </ng-container>
+            </p-tabPanel>
+        </p-tabView>
     </ng-container>
 
     <div 
@@ -27,3 +64,17 @@
         <app-spinner></app-spinner>
     </div>
 </div>
+
+<p-dialog
+    [(visible)]="showDrinksModal"
+    [modal]="true"
+    [closable]="true"
+    [header]="drinksModalHeader"
+>
+    <app-new-drink
+        *ngIf="showDrinksModal"
+        [editMode]="drinkEditMode"
+        [drinkToEdit]="drinkToEdit"
+        (onClose)="toggleDrinksModal(false)"
+    ></app-new-drink>
+</p-dialog>
