@@ -8,11 +8,11 @@ import { RevenueStore } from './services/revenue.store';
 import { RevenueParams } from './services/revenue.service';
 
 import { ConsolesService } from '../consoles/services/consoles.service';
-import { Console } from '../consoles/models/console.model';
 
 // primeng
 import { CalendarModule } from 'primeng/calendar';
 import { ButtonModule } from 'primeng/button';
+import { TabViewModule } from 'primeng/tabview';
 
 @Component({
   selector: 'app-revenue',
@@ -24,7 +24,8 @@ import { ButtonModule } from 'primeng/button';
     SingleRevenueComponent,
     SpinnerComponent,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TabViewModule
   ],
   providers: [
     RevenueStore

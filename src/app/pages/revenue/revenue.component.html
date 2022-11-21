@@ -36,63 +36,102 @@
     </div>
 
     <div class="card mt-7 shadow-md">
-        <div class="calendars">
-            <p-calendar
-                [(ngModel)]="day"
-                placeholder="ден..."
-                appendTo="body"
-                dateFormat="dd"
-                (onSelect)="dateChange($event, 'day')"
-            ></p-calendar>
-            <p-calendar
-                [(ngModel)]="month"
-                placeholder="месец..."
-                appendTo="body"
-                view="month"
-                dateFormat="mm"
-                (onSelect)="dateChange($event, 'month')"
-            ></p-calendar>
-            <p-calendar
-                [(ngModel)]="year"
-                placeholder="година..."
-                appendTo="body"
-                view="year"
-                dateFormat="yy"
-                (onSelect)="dateChange($event, 'year')"
-            ></p-calendar>
-        </div>
+        <p-tabView>
+            <p-tabPanel header="Consoles">
+                <div class="calendars">
+                    <p-calendar
+                        [(ngModel)]="day"
+                        placeholder="ден..."
+                        appendTo="body"
+                        dateFormat="dd"
+                        (onSelect)="dateChange($event, 'day')"
+                    ></p-calendar>
+                    <p-calendar
+                        [(ngModel)]="month"
+                        placeholder="месец..."
+                        appendTo="body"
+                        view="month"
+                        dateFormat="mm"
+                        (onSelect)="dateChange($event, 'month')"
+                    ></p-calendar>
+                    <p-calendar
+                        [(ngModel)]="year"
+                        placeholder="година..."
+                        appendTo="body"
+                        view="year"
+                        dateFormat="yy"
+                        (onSelect)="dateChange($event, 'year')"
+                    ></p-calendar>
+                </div>
+        
+                <div class="buttons mt-3 gap-2">
+                    <button
+                        pButton
+                        label="Филтрирај"
+                        (click)="filter()"
+                    ></button>
+        
+                    <button
+                        pButton
+                        label="Ресетирај"
+                        (click)="resetFilter()"
+                    ></button>
+                </div>
+        
+                <ng-container *ngIf="state.loaded">
+                    <div class="revenues mt-3">
+                        <p 
+                            class="text-center"
+                            *ngIf="state.revenues.length === 0">Во избраниот период немате заработка.</p>
+                        <app-single-revenue
+                            *ngFor="let revenue of state.revenues"
+                            [revenue]="revenue"
+                            [mapConsole]="mapConsole"
+                        ></app-single-revenue>
+                    </div>
+                </ng-container>
+        
+                <div 
+                    *ngIf="!state.loaded"
+                    class="w-full h-full flex justify-center align-center mt-10">
+                    <app-spinner></app-spinner>
+                </div>
+            </p-tabPanel>
 
-        <div class="buttons mt-3 gap-2">
-            <button
-                pButton
-                label="Филтрирај"
-                (click)="filter()"
-            ></button>
+            <p-tabPanel header="Drinks">
+                <div class="calendars">
+                    <p-calendar
+                        [(ngModel)]="day"
+                        placeholder="ден..."
+                        appendTo="body"
+                        dateFormat="dd"
+                        (onSelect)="dateChange($event, 'day')"
+                    ></p-calendar>
+                    <p-calendar
+                        [(ngModel)]="month"
+                        placeholder="месец..."
+                        appendTo="body"
+                        view="month"
+                        dateFormat="mm"
+                        (onSelect)="dateChange($event, 'month')"
+                    ></p-calendar>
+                </div>
+                
+                <div class="buttons mt-3 gap-2">
+                    <button
+                        pButton
+                        label="Филтрирај"
+                        (click)="filter()"
+                    ></button>
+        
+                    <button
+                        pButton
+                        label="Ресетирај"
+                        (click)="resetFilter()"
+                    ></button>
+                </div>
+            </p-tabPanel>
+        </p-tabView>
 
-            <button
-                pButton
-                label="Ресетирај"
-                (click)="resetFilter()"
-            ></button>
-        </div>
-
-        <ng-container *ngIf="state.loaded">
-            <div class="revenues mt-3">
-                <p 
-                    class="text-center"
-                    *ngIf="state.revenues.length === 0">Во избраниот период немате заработка.</p>
-                <app-single-revenue
-                    *ngFor="let revenue of state.revenues"
-                    [revenue]="revenue"
-                    [mapConsole]="mapConsole"
-                ></app-single-revenue>
-            </div>
-        </ng-container>
-
-        <div 
-            *ngIf="!state.loaded"
-            class="w-full h-full flex justify-center align-center mt-10">
-            <app-spinner></app-spinner>
-        </div>
     </div>
 </div>
