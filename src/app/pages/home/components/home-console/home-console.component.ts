@@ -9,6 +9,7 @@ import { SettingsStore } from 'src/app/pages/settings/services/settings.store';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ConsoleStatus } from 'src/app/pages/consoles/enums/consoleStatus.enum';
+import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
   selector: 'app-home-console',
@@ -53,7 +54,8 @@ export class HomeConsoleComponent implements OnInit {
 
   constructor(
     private consolesService: ConsolesService,
-    private settingsStore: SettingsStore
+    private settingsStore: SettingsStore,
+    private authState: AuthService
   ) { }
 
   ngOnInit(): void {
@@ -144,8 +146,12 @@ export class HomeConsoleComponent implements OnInit {
     const body = {
       price_to_pay: priceToSave,
       time_played: this.minutesPlayed,
-      date: dayjs(today).format('DD/MM/YYYY')
+      date: dayjs(today).format('DD/MM/YYYY'),
+      user: this.authState.state.user
     };
+
+    console.log(body);
+    
 
     this.consolesService.stop(this.console._id, body).subscribe({
       next: () => {

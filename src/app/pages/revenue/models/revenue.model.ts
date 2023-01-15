@@ -2,6 +2,7 @@ export interface Revenue {
     _id: string;
     
     console_id: string;
+    user: string;
 
     total_earning: number;
 

@@ -19,6 +19,7 @@ export interface RevenueState {
   totalDrinkEarningsLoaded: boolean;
 
   params: RevenueParams;
+  total: number;
 }
 
 export const initialState: RevenueState = {
@@ -33,7 +34,11 @@ export const initialState: RevenueState = {
   drinksLoaded: false,
   totalDrinkEarningsLoaded: false,
 
-  params: {}
+  params: {
+    page: 1,
+    take: 20
+  },
+  total: 0
 }
 
 @Injectable()
@@ -59,6 +64,10 @@ export class RevenueStore extends ComponentStore<RevenueState> {
     this.patchState({ totalDrinkEarningsLoaded });
   }
 
+  patchParams(params: RevenueParams): void {
+    this.patchState({ params: { ...params }  });
+  }
+
   getRevenues(): void {
     this.setLoaded(false);
     this.revenueService.getRevenues().subscribe({
@@ -80,11 +89,14 @@ export class RevenueStore extends ComponentStore<RevenueState> {
         const currentParams = this.get(s => s.params);
         const newParams = { ...currentParams, ...params };
 
-        return this.revenueService.filterRevenue(newParams).pipe(tap((response: HttpResponse<Revenue[]>) => {
+        return this.revenueService.filterRevenue(newParams).pipe(tap((response: HttpResponse<any>) => {
+          console.log('res body', response.body);
+          
               this.patchState({
                 loaded: true,
                 params: newParams,
-                revenues: response.body
+                revenues: response.body?.list,
+                total: response.body?.total
               });
             }
           ), catchError(() => {

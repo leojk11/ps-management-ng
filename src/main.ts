@@ -8,6 +8,7 @@ import { environment } from './environments/environment';
 
 import { AppComponent } from './app/app.component';
 import { APP_ROUTES } from './app/app.routing';
+import { CdkVirtualScrollViewport, ScrollingModule } from '@angular/cdk/scrolling';
 
 if (environment.production) {
   enableProdMode();
@@ -20,6 +21,8 @@ bootstrapApplication(AppComponent, {
   providers: [
     importProvidersFrom(HttpClientModule),
     importProvidersFrom(RouterModule.forRoot(APP_ROUTES)),
-    importProvidersFrom(BrowserAnimationsModule)
+    importProvidersFrom(BrowserAnimationsModule),
+    importProvidersFrom(ScrollingModule)
+    // importProvidersFrom(CdkVirtualScrollViewport)
   ]
 }).catch(err => console.error(err));

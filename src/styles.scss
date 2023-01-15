@@ -23,6 +23,7 @@
     img {
         width: 150px;
         height: 150px;
+        filter: invert(100%);
     }
 }
 
@@ -31,7 +32,7 @@
 }
 
 body {
-    background-color: rgb(222 230 240);
+    background-color: #2d333b;
 }
 
 .form-group {
@@ -69,8 +70,8 @@ body {
     width: 100%;
     padding: 15px;
 
-    background-color: #ffffff;
-    color: #000000;
+    background-color: #22272e;
+    color: whitesmoke;
 
     border-radius: 15px;
 }
@@ -85,18 +86,21 @@ body {
 
     padding: 10px 15px;
 
-    border: 1px solid rgb(222, 230, 240);
+    background-color: rgba(65, 132, 228, 0.15);
+    color: whitesmoke;
+
+    // border: 1px solid rgb(222, 230, 240);
     border-radius: 15px;
 
     .date {
         width: 50%;
     }
     .console {
-        width: 10%;
+        width: 20%;
         text-align: center;
     }
     .price {
-        width: 40%;
+        width: 30%;
         text-align: end;
     }
 }
@@ -104,12 +108,29 @@ body {
 // PRIMENG
 
 .p-button {
-    background-color: #000000 !important;
-    color: #ffffff !important;
+    background-color: #2d333b !important;
+    color: whitesmoke !important;
     border: none;
     outline: none;
-}
 
+    &:enabled:focus{
+      outline: none !important;
+      border: none !important;
+      box-shadow: none !important;
+    }
+}
+.p-dialog .p-dialog-content {
+  background-color: #22272e !important;
+  color: whitesmoke !important;
+}
+.p-confirm-dialog .p-dialog-content, .p-dialog-header {
+  background-color: #22272e !important;
+  color: whitesmoke !important;
+}
+.p-confirm-dialog .p-dialog-content, .p-dialog-footer {
+  background-color: #22272e !important;
+  color: whitesmoke !important;
+}
 .p-dialog {
     width: 90vw !important;
 }
@@ -135,10 +156,69 @@ body {
 .p-inputwrapper {
     width: 100% !important;
 }
+.p-inputtext {
+  background-color: #2d333b !important;
+  border: none !important;
+  color: whitesmoke !important;
+
+  &:enabled:focus{
+    outline: none !important;
+    border: none !important;
+    box-shadow: none !important;
+  }
+
+}
+
+.p-dropdown:not(.p-disabled).p-focus, .p-multiselect:not(.p-disabled).p-focus{
+  
+  outline: none !important;
+  border-color: none !important;
+  box-shadow: none !important;
+}
+
+.p-dropdown {
+  background-color: #2d333b !important;
+  border: none;
+  color: whitesmoke !important;
+}
+.p-dropdown-panel {
+  background-color: #2d333b !important;
+  border: none;
+  color: whitesmoke !important;
+}
+.p-dropdown-item.p-highlight {
+  background-color: #22272e !important;
+  color: whitesmoke !important;
+}
+.p-multiselect {
+  background-color: #2d333b !important;
+  border: none;
+  color: whitesmoke !important;
+}
+.p-multiselect-panel {
+  background-color: #2d333b !important;
+  border: none;
+  color: whitesmoke !important;
+
+  .p-multiselect-header {
+    background-color: #22272e !important;
+    border: none;
+    color: whitesmoke !important;
+  }
+}
+.p-multiselect-item.p-highlight {
+  background-color: #22272e !important;
+  color: whitesmoke !important;
+}
 .p-calendar {
     width: 100% !important;
 }
-
+.p-checkbox {
+  .p-checkbox-box {
+    background-color: #768390 !important;
+    border: none !important;
+  }
+}
 .p-dialog .p-dialog-footer {
     padding: 1.15rem !important;
 }

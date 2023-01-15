@@ -9,6 +9,8 @@ export interface RevenueParams {
   day?: number;
   month?: number;
   year?: number;
+  page?: number;
+  take?: any;
 }
 
 @Injectable({
@@ -21,7 +23,7 @@ export class RevenueService {
     private http: HttpClient
   ) { }
 
-  getRevenues(): Observable<Revenue[]> {
+  getRevenues(): Observable<any> {
     const path = `${ this.apiUrl }/revenue`;
     return this.http.get<Revenue[]>(path);
   }
@@ -45,6 +47,14 @@ export class RevenueService {
 
   getRevenueParams(params: RevenueParams): HttpParams {
     let httpParams = new HttpParams;
+
+    if (params.page) {
+      httpParams = httpParams.set('page', params.page);
+    }
+
+    if (params.take) {
+      httpParams = httpParams.set('take', params.take);
+    }
 
     if (params.day) {
       httpParams = httpParams.set('day', params.day.toString());

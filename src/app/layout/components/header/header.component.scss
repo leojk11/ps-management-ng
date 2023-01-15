@@ -7,7 +7,8 @@
     align-items: center;
     justify-content: space-between;
 
-    background-color: #ffffff;
+    background-color: #22272e;
+    color: whitesmoke;
 
     z-index: 999;
 
@@ -20,6 +21,7 @@
             height: 100%;
 
             object-fit: cover;
+            filter: invert(100%);
         }
     }
 
@@ -38,8 +40,8 @@
         width: 35px;
         height: 35px;
 
-        background-color: #000000;
-        color: #ffffff;
+        background-color: rgba(#000000, 0.4);
+        color: whitesmoke;
 
         border-radius: 50%;
 
